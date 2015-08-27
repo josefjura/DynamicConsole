@@ -81,10 +81,11 @@ namespace DynamicConsole
             }
         }
 
-        public void AddCommand(IEnvironmentCommand comm)
+        public void AddCommand<T>() where T : class, IEnvironmentCommand, new()
         {
-            this._commands.Add(comm);
-            comm.Console = this;
+            var instance = new T();
+            this._commands.Add(instance);
+            instance.Console = this;
         }
 
         public void ProcessInput(CommandInput input, bool findSimilar)
