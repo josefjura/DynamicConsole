@@ -2,6 +2,7 @@ namespace DynamicConsole
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Linq;
 
     using global::DynamicConsole.Commands.Base;
@@ -29,7 +30,7 @@ namespace DynamicConsole
             ConsoleActionCallback unknownCommand)
         {
             this._output = output;
-            this.Commands = new List<IEnvironmentCommand>();
+            this._commands = new List<IEnvironmentCommand>();
             this.Prompt = prompt;
             this.FoundCommand = foundCommand;
             this.UnknownCommand = unknownCommand;
@@ -41,7 +42,16 @@ namespace DynamicConsole
 
         public Dictionary<string, object> Cache { get; set; }
 
-        public IList<IEnvironmentCommand> Commands { get; set; }
+        public List<IEnvironmentCommand> _commands;
+
+        public ReadOnlyCollection<IEnvironmentCommand> Commands
+        {
+            get
+            {
+                return _commands.AsReadOnly();
+            }
+        }
+
 
         public ConsoleActionCallback<IEnvironmentCommand> FoundCommand { get; set; }
 
@@ -73,7 +83,7 @@ namespace DynamicConsole
 
         public void AddCommand(IEnvironmentCommand comm)
         {
-            this.Commands.Add(comm);
+            this._commands.Add(comm);
             comm.Console = this;
         }
 
