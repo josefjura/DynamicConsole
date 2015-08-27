@@ -26,7 +26,7 @@
 
         #endregion
 
-        public abstract bool Run(CommandInput ci, IOutput output, IList<CommandError> errors);
+        public abstract bool Run(CommandInput ci, IList<CommandError> errors);
 
         public abstract bool CanRun(CommandInput ci);
 

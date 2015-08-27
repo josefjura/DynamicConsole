@@ -21,7 +21,5 @@ namespace DynamicConsole.Commands.Base
         #endregion
 
         bool TryRun(CommandInput ci, IOutput output, out IList<CommandError> errors);
-
-        void AccessCache(Dictionary<string, object> cache);
     }
 }

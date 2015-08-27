@@ -35,16 +35,12 @@
             {
                 if (sig.CanRun(ci))
                 {
-                    return sig.Run(ci, output, errors);
+                    return sig.Run(ci, errors);
                 }
             }
 
             errors.Add(new CommandError("Unknown parameters", "Current parameters can't be parsed"));
             return false;
-        }
-
-        public virtual void AccessCache(Dictionary<string, object> cache)
-        {
         }
 
         public List<CommandSignature> Signatures { get; set; }

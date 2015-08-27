@@ -9,7 +9,7 @@
 
     public class SimpleSignature : CommandSignature
     {
-        public delegate bool CommandSignatureHitCallback(CommandInput ci, IOutput output, IList<CommandError> errors);
+        public delegate bool CommandSignatureHitCallback(CommandInput ci, IList<CommandError> errors);
 
         #region Fields
 
@@ -36,9 +36,9 @@
 
         #endregion
 
-        public override bool Run(CommandInput ci, IOutput output, IList<CommandError> errors)
+        public override bool Run(CommandInput ci, IList<CommandError> errors)
         {
-            return this._callback?.Invoke(ci, output, errors) ?? false;
+            return this._callback?.Invoke(ci, errors) ?? false;
         }
 
         public override bool CanRun(CommandInput ci)

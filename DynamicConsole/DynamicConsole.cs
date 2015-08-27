@@ -19,7 +19,7 @@ namespace DynamicConsole
 
         #region Fields
 
-        private readonly IOutput _output;
+        public IOutput Output { get; private set; }
 
         public List<IEnvironmentCommand> _commands;
 
@@ -33,7 +33,7 @@ namespace DynamicConsole
             ConsoleActionCallback<IEnvironmentCommand> foundCommand,
             ConsoleActionCallback unknownCommand)
         {
-            this._output = output;
+            this.Output = output;
             this._commands = new List<IEnvironmentCommand>();
             this.Prompt = prompt;
             this.FoundCommand = foundCommand;
@@ -43,8 +43,6 @@ namespace DynamicConsole
         #endregion
 
         #region Properties
-
-        public Dictionary<string, object> Cache { get; set; }
 
         public ReadOnlyCollection<IEnvironmentCommand> Commands
         {
@@ -70,16 +68,7 @@ namespace DynamicConsole
             {
                 c.Dispose();
             }
-            this.Cache = null;
-        }
 
-        private void InitCache()
-        {
-            this.Cache = new Dictionary<string, object>();
-            foreach (var c in this.Commands)
-            {
-                c.AccessCache(this.Cache);
-            }
         }
 
         public void AddCommand<T>() where T : class, IEnvironmentCommand, new()
@@ -103,7 +92,7 @@ namespace DynamicConsole
                 if (commands.Count == 1)
                 {
                     var exec = commands.Single();
-                    this.FoundCommand(this._output, input, exec);
+                    this.FoundCommand(this.Output, input, exec);
                 }
                 else
                 {
@@ -112,23 +101,20 @@ namespace DynamicConsole
             }
             else
             {
-                this.UnknownCommand(this._output, input);
+                this.UnknownCommand(this.Output, input);
             }
         }
 
-        public void CloseConsole()
+        public virtual void CloseConsole()
         {
-            this._output.WriteLine("Console ending");
+            this.Output.WriteLine("Console ending");
             this.Dispose();
         }
 
-        public void StartConsole()
+        public virtual void StartConsole()
         {
-            this._output.WriteLine("Console starting");
-            this._output.Write("Precaching . . ");
-            this.InitCache();
-            this._output.WriteLine("Done");
-            this._output.WriteLine("");
+            this.Output.WriteLine("Console starting");
+            this.Output.WriteLine("");
         }
 
         public void EnsureSignatures()

@@ -18,7 +18,6 @@ namespace DynamicConsole.Commands.Signatures
     {
         public delegate bool CommandSignatureHitCallbackGeneric<in TOut>(
             TOut data,
-            IOutput output,
             IList<CommandError> errors);
 
         #region Fields
@@ -44,9 +43,9 @@ namespace DynamicConsole.Commands.Signatures
 
         #endregion
 
-        public override bool Run(CommandInput ci, IOutput output, IList<CommandError> errors)
+        public override bool Run(CommandInput ci, IList<CommandError> errors)
         {
-            return this._callback?.Invoke(this.ParseType(ci), output, errors) ?? false;
+            return this._callback?.Invoke(this.ParseType(ci), errors) ?? false;
         }
 
         private TData ParseType(CommandInput ci)
