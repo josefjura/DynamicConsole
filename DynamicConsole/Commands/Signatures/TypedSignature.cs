@@ -6,10 +6,12 @@ namespace DynamicConsole.Commands.Signatures
     using System.Reflection;
     using System.Text;
 
-    using Attributes;
-    using Errors;
-    using Input;
-    using IO.Base;
+    using global::DynamicConsole.Commands.Attributes;
+    using global::DynamicConsole.Commands.Errors;
+    using global::DynamicConsole.Commands.Input;
+    using global::DynamicConsole.IO.Base;
+
+    using RandomR.Main;
 
     public class TypedSignature<TData> : CommandSignature
         where TData : class, new()
@@ -27,8 +29,8 @@ namespace DynamicConsole.Commands.Signatures
 
         #region Constructors
 
-        public TypedSignature(string description, CommandSignatureHitCallbackGeneric<TData> callback)
-            : base(description)
+        public TypedSignature(string keyword, string description, CommandSignatureHitCallbackGeneric<TData> callback)
+            : base(keyword, description)
         {
             this._callback = callback;
             this.TypeMap = this.GetTypeMap();
@@ -83,6 +85,11 @@ namespace DynamicConsole.Commands.Signatures
 
         public override bool CanRun(CommandInput ci)
         {
+            if (ci.Keyword != Keyword)
+            {
+                return false;
+            }
+
             foreach (var p in this.TypeMap)
             {
                 var result = ci.Parameters.Any(x => x.Conforms(p.Value));
@@ -115,6 +122,25 @@ namespace DynamicConsole.Commands.Signatures
             }
 
             return sb.ToString();
+        }
+
+        public override CommandInput GenerateRandomInput(string keyword)
+        {
+            var toReturn = new CommandInput();
+
+            toReturn.Keyword = keyword;
+
+            var i = 0;
+            foreach (var item in TypeMap)
+            {
+                var value = string.IsNullOrEmpty(item.Value.Value)
+                                ? RandomResolver.GetRandomValue(item.Key.PropertyType).ToString()
+                                : item.Value.Value;
+
+                toReturn.Parameters.Add(new Parameter { Value = value, Index = i++ });
+            }
+
+            return toReturn;
         }
     }
 }

@@ -3,10 +3,10 @@ namespace DynamicConsole.Commands.Base
     using System;
     using System.Collections.Generic;
 
-    using Errors;
-    using Input;
-    using Signatures;
-    using IO.Base;
+    using global::DynamicConsole.Commands.Errors;
+    using global::DynamicConsole.Commands.Input;
+    using global::DynamicConsole.Commands.Signatures;
+    using global::DynamicConsole.IO.Base;
 
     public interface IEnvironmentCommand : IDisposable
     {

@@ -1,6 +1,6 @@
 ﻿namespace DynamicConsole.Commands.Signatures
 {
-    using Input;
+    using global::DynamicConsole.Commands.Input;
 
     public class TokenSignaturePart : CommandSignaturePart
     {
@@ -23,6 +23,11 @@
         public override bool CanParse(Parameter parameter)
         {
             return parameter.Value == this._token;
+        }
+
+        public override string GenerateInput()
+        {
+            return _token;
         }
 
         public override string ToString()

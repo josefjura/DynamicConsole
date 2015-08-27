@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicConsole", "DynamicCo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicConsole.Tests", "DynamicConsole.Test\DynamicConsole.Tests.csproj", "{BAEAF514-4C3D-45C3-8149-3C8222EACE52}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomR.Main", "..\RandomR\Source\RandomR.Main\RandomR.Main.csproj", "{52899273-EE4A-4D53-AFE6-A40C3F08C22F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{BAEAF514-4C3D-45C3-8149-3C8222EACE52}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BAEAF514-4C3D-45C3-8149-3C8222EACE52}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BAEAF514-4C3D-45C3-8149-3C8222EACE52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52899273-EE4A-4D53-AFE6-A40C3F08C22F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52899273-EE4A-4D53-AFE6-A40C3F08C22F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52899273-EE4A-4D53-AFE6-A40C3F08C22F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52899273-EE4A-4D53-AFE6-A40C3F08C22F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

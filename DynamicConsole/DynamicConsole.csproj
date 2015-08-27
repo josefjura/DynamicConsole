@@ -53,9 +53,19 @@
     <Compile Include="Commands\Signatures\TypedSignature.cs" />
     <Compile Include="Commands\Signatures\TypeSignaturePart.cs" />
     <Compile Include="DynamicConsole.cs" />
+    <Compile Include="Commands\Exceptions\CommandUniquenessException.cs" />
     <Compile Include="IO\Base\IOutput.cs" />
     <Compile Include="IO\ConsoleOutput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\RandomR\Source\RandomR.Main\RandomR.Main.csproj">
+      <Project>{52899273-ee4a-4d53-afe6-a40c3f08c22f}</Project>
+      <Name>RandomR.Main</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Helpers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

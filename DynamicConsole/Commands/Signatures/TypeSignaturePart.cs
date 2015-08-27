@@ -2,7 +2,9 @@
 {
     using System;
 
-    using Input;
+    using global::DynamicConsole.Commands.Input;
+
+    using RandomR.Main;
 
     public class TypeSignaturePart : CommandSignaturePart
     {
@@ -37,6 +39,13 @@
             {
                 return false;
             }
+        }
+
+        public override string GenerateInput()
+        {
+            var r = new Random();
+
+            return RandomResolver.GetRandomValue(_checkType).ToString();
         }
 
         public override string ToString()

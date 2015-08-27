@@ -2,7 +2,7 @@
 {
     using System;
 
-    using Attributes;
+    using global::DynamicConsole.Commands.Attributes;
 
     public class Parameter
     {

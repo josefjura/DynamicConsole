@@ -2,8 +2,8 @@ namespace DynamicConsole.IO
 {
     using System;
 
-    using Commands.Base;
-    using Base;
+    using global::DynamicConsole.Commands.Base;
+    using global::DynamicConsole.IO.Base;
 
     public class ConsoleOutput : IOutput
     {

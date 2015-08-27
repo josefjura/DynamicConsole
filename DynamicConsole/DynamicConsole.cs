@@ -3,9 +3,11 @@ namespace DynamicConsole
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Diagnostics;
     using System.Linq;
 
     using global::DynamicConsole.Commands.Base;
+    using global::DynamicConsole.Commands.Exceptions;
     using global::DynamicConsole.Commands.Input;
     using global::DynamicConsole.IO.Base;
 
@@ -18,6 +20,8 @@ namespace DynamicConsole
         #region Fields
 
         private readonly IOutput _output;
+
+        public List<IEnvironmentCommand> _commands;
 
         #endregion
 
@@ -42,8 +46,6 @@ namespace DynamicConsole
 
         public Dictionary<string, object> Cache { get; set; }
 
-        public List<IEnvironmentCommand> _commands;
-
         public ReadOnlyCollection<IEnvironmentCommand> Commands
         {
             get
@@ -51,7 +53,6 @@ namespace DynamicConsole
                 return _commands.AsReadOnly();
             }
         }
-
 
         public ConsoleActionCallback<IEnvironmentCommand> FoundCommand { get; set; }
 
@@ -128,6 +129,25 @@ namespace DynamicConsole
             this.InitCache();
             this._output.WriteLine("Done");
             this._output.WriteLine("");
+        }
+
+        public void EnsureSignatures()
+        {
+            foreach (var command in Commands)
+            {
+                foreach (var signature in command.Signatures)
+                {
+                    var random = signature.GenerateRandomInput(command.Keyword);
+
+                    Debug.WriteLine(random);
+                    var processors = Commands.SelectMany(x => x.Signatures).Where(x => x.CanRun(random)).ToList();
+
+                    if (processors.Count > 1)
+                    {
+                        throw new CommandUniquenessException("EnsureSignatures", processors);
+                    }
+                }
+            }
         }
     }
 }

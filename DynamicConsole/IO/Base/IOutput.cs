@@ -1,6 +1,6 @@
 namespace DynamicConsole.IO.Base
 {
-    using Commands.Base;
+    using global::DynamicConsole.Commands.Base;
 
     public interface IOutput
     {

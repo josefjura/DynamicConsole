@@ -3,9 +3,9 @@
     using System.Collections.Generic;
     using System.Text;
 
-    using Errors;
-    using Input;
-    using IO.Base;
+    using global::DynamicConsole.Commands.Errors;
+    using global::DynamicConsole.Commands.Input;
+    using global::DynamicConsole.IO.Base;
 
     public class SimpleSignature : CommandSignature
     {
@@ -19,8 +19,8 @@
 
         #region Constructors
 
-        public SimpleSignature(string description, CommandSignatureHitCallback callback)
-            : base(description)
+        public SimpleSignature(string keyword, string description, CommandSignatureHitCallback callback)
+            : base(keyword, description)
         {
             this._callback = callback;
             this.Parts = new List<CommandSignaturePart>();
@@ -43,6 +43,11 @@
 
         public override bool CanRun(CommandInput ci)
         {
+            if (ci.Keyword != Keyword)
+            {
+                return false;
+            }
+
             if (ci.IndexParameters.Count != this.ParameterCount)
             {
                 return false;
@@ -67,6 +72,21 @@
                 sb.Append($" {p}");
             }
             return sb.ToString();
+        }
+
+        public override CommandInput GenerateRandomInput(string keyword)
+        {
+            var toReturn = new CommandInput();
+
+            toReturn.Keyword = keyword;
+
+            var i = 0;
+            foreach (var part in Parts)
+            {
+                toReturn.Parameters.Add(new Parameter { Value = part.GenerateInput(), Index = i++ });
+            }
+
+            return toReturn;
         }
     }
 }

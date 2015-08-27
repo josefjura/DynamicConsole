@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using Errors;
+    using global::DynamicConsole.Commands.Errors;
 
     public class CommandInput
     {
@@ -31,6 +31,14 @@
         }
 
         public string Keyword { get; set; } = string.Empty;
+
+        public IList<Parameter> NamedParameters
+        {
+            get
+            {
+                return this.Parameters.Where(x => x.IsNamed).ToList();
+            }
+        }
 
         public IList<Parameter> Parameters { get; set; }
 
@@ -96,6 +104,14 @@
         {
             ci.Errors.Add(
                 new CommandError("Parameter value missing", $"Missing value for parameter {name.Replace("-", "")}"));
+        }
+
+        public override string ToString()
+        {
+            var indexParams = string.Join(" ", this.IndexParameters.Select(s => s.Value));
+            var namedParams = string.Join(" ", this.NamedParameters.Select(x => $"-{x.Name} {x.Value}"));
+
+            return $"{this.Keyword} {indexParams} {namedParams}";
         }
     }
 }

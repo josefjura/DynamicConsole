@@ -1,6 +1,6 @@
 ﻿namespace DynamicConsole.Commands.Signatures
 {
-    using Input;
+    using global::DynamicConsole.Commands.Input;
 
     public abstract class CommandSignaturePart
     {
@@ -20,5 +20,7 @@
         #endregion
 
         public abstract bool CanParse(Parameter parameter);
+
+        public abstract string GenerateInput();
     }
 }
