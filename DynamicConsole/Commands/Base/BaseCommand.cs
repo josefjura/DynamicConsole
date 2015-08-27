@@ -11,10 +11,9 @@
     {
         #region Constructors
 
-        public BaseCommand(string keyword, DynamicConsole ec)
+        public BaseCommand(string keyword)
         {
             this.Keyword = keyword;
-            this.Console = ec;
             this.Signatures = new List<CommandSignature>();
         }
 

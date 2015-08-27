@@ -13,7 +13,7 @@ namespace DynamicConsole
     {
         public delegate void ConsoleActionCallback(IOutput output, CommandInput ci);
 
-        public delegate void ConsoleActionCallback<T>(IOutput output, CommandInput ci, T parameter);
+        public delegate void ConsoleActionCallback<in T>(IOutput output, CommandInput ci, T parameter);
 
         #region Fields
 
