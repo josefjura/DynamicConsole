@@ -1,4 +1,4 @@
-﻿namespace DynamicConsole.Commands.Modules
+﻿namespace DynamicConsole.Commands.Modules.Base
 {
     public abstract class ModuleBase : IModule
     {

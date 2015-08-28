@@ -4,17 +4,9 @@ namespace DynamicConsole.Commands.Modules
     using System.Linq;
 
     using global::DynamicConsole.Commands.Base;
+    using global::DynamicConsole.Commands.Modules.Base;
 
     using Microsoft.Practices.Unity;
-
-    public interface IModuleRegistrar
-    {
-        void RegisterService<TIntf, TImpl>() where TImpl : TIntf;
-
-        void RegisterService<TIntf, TImpl>(Func<TImpl> constructor) where TImpl : TIntf;
-
-        T ResolveCommand<T>() where T : class, IEnvironmentCommand;
-    }
 
     public class UnityRegistrar : IModuleRegistrar
     {
@@ -35,27 +27,27 @@ namespace DynamicConsole.Commands.Modules
 
         public void RegisterService<TIntf, TImpl>() where TImpl : TIntf
         {
-            _container.RegisterType<TIntf, TImpl>(new PerThreadLifetimeManager());
+            this._container.RegisterType<TIntf, TImpl>(new PerThreadLifetimeManager());
         }
 
         public void RegisterService<TIntf, TImpl>(Func<TImpl> constructor) where TImpl : TIntf
         {
-            if (!IsRegistered<TIntf>())
+            if (!this.IsRegistered<TIntf>())
             {
-                _container.RegisterInstance<TIntf>(constructor(), new PerThreadLifetimeManager());
+                this._container.RegisterInstance<TIntf>(constructor(), new PerThreadLifetimeManager());
             }
         }
 
         public T ResolveCommand<T>() where T : class, IEnvironmentCommand
         {
-            return _container.Resolve<T>();
+            return this._container.Resolve<T>();
         }
 
         public void RegisterService<TIntf, TImpl>(TImpl value) where TImpl : TIntf
         {
-            if (!IsRegistered<TIntf>())
+            if (!this.IsRegistered<TIntf>())
             {
-                _container.RegisterInstance<TIntf>(value, new PerThreadLifetimeManager());
+                this._container.RegisterInstance<TIntf>(value, new PerThreadLifetimeManager());
             }
         }
 
