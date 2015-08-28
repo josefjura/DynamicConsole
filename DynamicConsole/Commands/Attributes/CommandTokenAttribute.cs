@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace DynamicConsole.Commands.Attributes
 {
+    [AttributeUsage(AttributeTargets.Property)]
     public class CommandTokenAttribute : CommandParameterAttribute
     {
         public CommandTokenAttribute(int index, string value)

@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\Attributes\CommandParameterAttribute.cs" />
+    <Compile Include="Commands\Attributes\CommandTokenAttribute.cs" />
     <Compile Include="Commands\Base\BaseCommand.cs" />
     <Compile Include="Commands\Base\IEnvironmentCommand.cs" />
     <Compile Include="Commands\Errors\CommandError.cs" />
