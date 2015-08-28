@@ -9,10 +9,17 @@
 
     public abstract class BaseCommand : IEnvironmentCommand
     {
+        #region Fields
+
+        protected readonly DynamicConsole _console;
+
+        #endregion
+
         #region Constructors
 
-        public BaseCommand(string keyword)
+        public BaseCommand(string keyword, DynamicConsole console)
         {
+            this._console = console;
             this.Keyword = keyword;
             this.Signatures = new List<CommandSignature>();
         }
@@ -22,8 +29,6 @@
         public virtual void Dispose()
         {
         }
-
-        public DynamicConsole Console { get; set; }
 
         public string Keyword { get; set; }
 

@@ -12,17 +12,14 @@
 
         private readonly List<IEnvironmentCommand> _commands;
 
-        private readonly DynamicConsole _console;
-
         private readonly IModuleRegistrar _registrar;
 
         #endregion
 
         #region Constructors
 
-        public ModuleBase(DynamicConsole console, IModuleRegistrar registrar)
+        public ModuleBase(IModuleRegistrar registrar)
         {
-            this._console = console;
             this._registrar = registrar;
             _commands = new List<IEnvironmentCommand>();
         }
@@ -40,7 +37,6 @@
         public void AddCommand<T>() where T : class, IEnvironmentCommand
         {
             var c = _registrar.ResolveCommand<T>();
-            c.Console = _console;
             this._commands.Add(c);
         }
 

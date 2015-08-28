@@ -9,8 +9,11 @@ namespace DynamicConsole
     using global::DynamicConsole.Commands.Base;
     using global::DynamicConsole.Commands.Exceptions;
     using global::DynamicConsole.Commands.Input;
+    using global::DynamicConsole.Commands.Modules;
     using global::DynamicConsole.Commands.Modules.Base;
     using global::DynamicConsole.IO.Base;
+
+    using Microsoft.Practices.Unity;
 
     public class DynamicConsole : IDisposable
     {
@@ -21,6 +24,8 @@ namespace DynamicConsole
         #region Fields
 
         private readonly List<IModule> _modules;
+
+        protected IModuleRegistrar _registrar;
 
         #endregion
 
@@ -36,6 +41,11 @@ namespace DynamicConsole
             this.Prompt = prompt;
             this.FoundCommand = foundCommand;
             this.UnknownCommand = unknownCommand;
+
+            var uc = new UnityContainer();
+            uc.RegisterInstance(this, new PerThreadLifetimeManager());
+
+            _registrar = new UnityRegistrar(uc);
             _modules = new List<IModule>();
         }
 

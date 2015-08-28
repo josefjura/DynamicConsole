@@ -23,6 +23,11 @@ namespace DynamicConsole.Commands.Modules
             this._container = new UnityContainer();
         }
 
+        public UnityRegistrar(UnityContainer con)
+        {
+            this._container = con;
+        }
+
         #endregion
 
         public void RegisterService<TIntf, TImpl>() where TImpl : TIntf

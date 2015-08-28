@@ -12,8 +12,6 @@ namespace DynamicConsole.Commands.Base
     {
         #region Properties
 
-        DynamicConsole Console { get; set; }
-
         string Keyword { get; set; }
 
         List<CommandSignature> Signatures { get; set; }
