@@ -3,7 +3,7 @@
     using System;
 
     [AttributeUsage(AttributeTargets.Property)]
-    public sealed class CommandParameterAttribute : Attribute
+    public class CommandParameterAttribute : Attribute
     {
         #region Constructors
 
@@ -18,11 +18,11 @@
 
         #region Properties
 
-        public string Id { get; set; }
+        public virtual string Id { get; }
 
         public int Index { get; set; }
 
-        public TypeCode Type { get; set; }
+        public virtual TypeCode Type { get; }
 
         public string Value { get; set; }
 

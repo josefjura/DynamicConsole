@@ -4,7 +4,6 @@
 
     using global::DynamicConsole.Commands.Errors;
     using global::DynamicConsole.Commands.Input;
-    using global::DynamicConsole.IO.Base;
 
     public abstract class CommandSignature
     {

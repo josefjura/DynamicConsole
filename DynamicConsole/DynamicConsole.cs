@@ -9,6 +9,7 @@ namespace DynamicConsole
     using global::DynamicConsole.Commands.Base;
     using global::DynamicConsole.Commands.Exceptions;
     using global::DynamicConsole.Commands.Input;
+    using global::DynamicConsole.Commands.Modules.Base;
     using global::DynamicConsole.IO.Base;
 
     public class DynamicConsole : IDisposable
@@ -19,9 +20,7 @@ namespace DynamicConsole
 
         #region Fields
 
-        public IOutput Output { get; private set; }
-
-        public readonly List<IEnvironmentCommand> _commands;
+        private readonly List<IModule> _modules;
 
         #endregion
 
@@ -34,10 +33,10 @@ namespace DynamicConsole
             ConsoleActionCallback unknownCommand)
         {
             this.Output = output;
-            this._commands = new List<IEnvironmentCommand>();
             this.Prompt = prompt;
             this.FoundCommand = foundCommand;
             this.UnknownCommand = unknownCommand;
+            _modules = new List<IModule>();
         }
 
         #endregion
@@ -48,13 +47,23 @@ namespace DynamicConsole
         {
             get
             {
-                return _commands.AsReadOnly();
+                return _modules.SelectMany(x => x.Commands).ToList().AsReadOnly();
             }
         }
 
         public ConsoleActionCallback<IEnvironmentCommand> FoundCommand { get; set; }
 
         public bool IsExiting { get; set; }
+
+        public ReadOnlyCollection<IModule> Modules
+        {
+            get
+            {
+                return _modules.AsReadOnly();
+            }
+        }
+
+        public IOutput Output { get; }
 
         public string Prompt { get; set; }
 
@@ -68,15 +77,11 @@ namespace DynamicConsole
             {
                 c.Dispose();
             }
-
         }
 
-        public void AddCommand<T>() where T : class, IEnvironmentCommand, new()
+        public void AddModule(IModule module)
         {
-            var instance = new T();
-            this._commands.Add(instance);
-            instance.Console = this;
-            instance.Initialize();
+            this._modules.Add(module);
         }
 
         public void ProcessInput(CommandInput input, bool findSimilar)
@@ -136,6 +141,5 @@ namespace DynamicConsole
                 }
             }
         }
-
     }
 }
