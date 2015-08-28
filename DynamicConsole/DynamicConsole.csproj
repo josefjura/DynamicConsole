@@ -78,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />
+    <Folder Include="_Version_0_8\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
