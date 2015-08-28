@@ -3,26 +3,31 @@
     using System;
 
     [AttributeUsage(AttributeTargets.Property)]
-    public sealed class CommandParameterAttribute : Attribute
+    public class CommandParameterAttribute : Attribute
     {
+        private string _id;
+
+        private TypeCode _type;
+
         #region Constructors
 
         // This is a positional argument
         public CommandParameterAttribute(string id, TypeCode typeCode)
         {
-            this.Id = id;
-            this.Type = typeCode;
+            this._id = id;
+            this._type = typeCode;
         }
 
         #endregion
 
         #region Properties
 
-        public string Id { get; set; }
+        public virtual TypeCode Type => this._type;
+
+        public virtual string Id => this._id;
 
         public int Index { get; set; }
 
-        public TypeCode Type { get; set; }
 
         public string Value { get; set; }
 
