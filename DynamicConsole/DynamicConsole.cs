@@ -21,7 +21,7 @@ namespace DynamicConsole
 
         public IOutput Output { get; private set; }
 
-        public List<IEnvironmentCommand> _commands;
+        public readonly List<IEnvironmentCommand> _commands;
 
         #endregion
 
@@ -76,6 +76,7 @@ namespace DynamicConsole
             var instance = new T();
             this._commands.Add(instance);
             instance.Console = this;
+            instance.Initialize();
         }
 
         public void ProcessInput(CommandInput input, bool findSimilar)
@@ -135,5 +136,6 @@ namespace DynamicConsole
                 }
             }
         }
+
     }
 }
