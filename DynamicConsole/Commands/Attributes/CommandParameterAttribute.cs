@@ -5,10 +5,6 @@
     [AttributeUsage(AttributeTargets.Property)]
     public class CommandParameterAttribute : Attribute
     {
-        #region Fields
-
-        #endregion
-
         #region Constructors
 
         // This is a positional argument
