@@ -5,29 +5,28 @@
     [AttributeUsage(AttributeTargets.Property)]
     public class CommandParameterAttribute : Attribute
     {
-        private string _id;
+        #region Fields
 
-        private TypeCode _type;
+        #endregion
 
         #region Constructors
 
         // This is a positional argument
         public CommandParameterAttribute(string id, TypeCode typeCode)
         {
-            this._id = id;
-            this._type = typeCode;
+            this.Id = id;
+            this.Type = typeCode;
         }
 
         #endregion
 
         #region Properties
 
-        public virtual TypeCode Type => this._type;
-
-        public virtual string Id => this._id;
+        public virtual string Id { get; }
 
         public int Index { get; set; }
 
+        public virtual TypeCode Type { get; }
 
         public string Value { get; set; }
 

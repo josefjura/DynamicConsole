@@ -19,8 +19,6 @@ namespace DynamicConsole
 
         #region Fields
 
-        public IOutput Output { get; private set; }
-
         public readonly List<IEnvironmentCommand> _commands;
 
         #endregion
@@ -56,6 +54,8 @@ namespace DynamicConsole
 
         public bool IsExiting { get; set; }
 
+        public IOutput Output { get; }
+
         public string Prompt { get; set; }
 
         public ConsoleActionCallback UnknownCommand { get; set; }
@@ -68,7 +68,6 @@ namespace DynamicConsole
             {
                 c.Dispose();
             }
-
         }
 
         public void AddCommand<T>() where T : class, IEnvironmentCommand, new()
@@ -136,6 +135,5 @@ namespace DynamicConsole
                 }
             }
         }
-
     }
 }

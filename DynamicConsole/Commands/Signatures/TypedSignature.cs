@@ -9,16 +9,13 @@ namespace DynamicConsole.Commands.Signatures
     using global::DynamicConsole.Commands.Attributes;
     using global::DynamicConsole.Commands.Errors;
     using global::DynamicConsole.Commands.Input;
-    using global::DynamicConsole.IO.Base;
 
     using RandomR.Main;
 
     public class TypedSignature<TData> : CommandSignature
         where TData : class, new()
     {
-        public delegate bool CommandSignatureHitCallbackGeneric<in TOut>(
-            TOut data,
-            IList<CommandError> errors);
+        public delegate bool CommandSignatureHitCallbackGeneric<in TOut>(TOut data, IList<CommandError> errors);
 
         #region Fields
 
