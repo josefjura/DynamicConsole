@@ -51,10 +51,6 @@
             return false;
         }
 
-        public virtual void Initialize()
-        {
-        }
-
         public List<CommandSignature> Signatures { get; set; }
     }
 }
