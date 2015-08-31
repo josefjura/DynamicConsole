@@ -72,6 +72,7 @@
     <Compile Include="DynamicConsole.cs" />
     <Compile Include="Commands\Exceptions\CommandUniquenessException.cs" />
     <Compile Include="IO\Base\IOutput.cs" />
+    <Compile Include="IO\Formatting\TabularOutput.cs" />
     <Compile Include="IO\ConsoleOutput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

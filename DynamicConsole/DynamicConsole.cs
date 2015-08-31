@@ -93,6 +93,7 @@ namespace DynamicConsole
         {
             this._modules.Add(module);
         }
+        
 
         public void ProcessInput(CommandInput input, bool findSimilar)
         {
