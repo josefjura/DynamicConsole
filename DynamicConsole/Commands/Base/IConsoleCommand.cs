@@ -5,23 +5,22 @@ namespace DynamicConsole.Commands.Base
 
     using global::DynamicConsole.Commands.Errors;
     using global::DynamicConsole.Commands.Input;
+    using global::DynamicConsole.Commands.Modules.Base;
     using global::DynamicConsole.Commands.Signatures;
     using global::DynamicConsole.IO.Base;
 
-    public interface IEnvironmentCommand : IDisposable
+    public interface IConsoleCommand : IDisposable
     {
         #region Properties
 
-        DynamicConsole Console { get; set; }
-
         string Keyword { get; set; }
+
+        IModule Module { get; set; }
 
         List<CommandSignature> Signatures { get; set; }
 
         #endregion
 
         bool TryRun(CommandInput ci, IOutput output, out IList<CommandError> errors);
-
-        void Initialize();
     }
 }

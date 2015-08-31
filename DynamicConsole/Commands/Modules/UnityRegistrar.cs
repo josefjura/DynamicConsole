@@ -23,6 +23,11 @@ namespace DynamicConsole.Commands.Modules
             this._container = new UnityContainer();
         }
 
+        public UnityRegistrar(UnityContainer con)
+        {
+            this._container = con;
+        }
+
         #endregion
 
         public void RegisterService<TIntf, TImpl>() where TImpl : TIntf
@@ -38,9 +43,14 @@ namespace DynamicConsole.Commands.Modules
             }
         }
 
-        public T ResolveCommand<T>() where T : class, IEnvironmentCommand
+        public T ResolveCommand<T>() where T : class, IConsoleCommand
         {
             return this._container.Resolve<T>();
+        }
+
+        public void RegisterInstance<T>(T dynamicConsole, LifetimeManager perThreadLifetimeManager)
+        {
+            this._container.RegisterInstance(dynamicConsole, perThreadLifetimeManager);
         }
 
         public void RegisterService<TIntf, TImpl>(TImpl value) where TImpl : TIntf

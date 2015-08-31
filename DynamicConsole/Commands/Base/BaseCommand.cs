@@ -4,15 +4,23 @@
 
     using global::DynamicConsole.Commands.Errors;
     using global::DynamicConsole.Commands.Input;
+    using global::DynamicConsole.Commands.Modules.Base;
     using global::DynamicConsole.Commands.Signatures;
     using global::DynamicConsole.IO.Base;
 
-    public abstract class BaseCommand : IEnvironmentCommand
+    public abstract class BaseCommand : IConsoleCommand
     {
+        #region Fields
+
+        protected readonly DynamicConsole _console;
+
+        #endregion
+
         #region Constructors
 
-        public BaseCommand(string keyword)
+        public BaseCommand(string keyword, DynamicConsole console)
         {
+            this._console = console;
             this.Keyword = keyword;
             this.Signatures = new List<CommandSignature>();
         }
@@ -23,9 +31,9 @@
         {
         }
 
-        public DynamicConsole Console { get; set; }
-
         public string Keyword { get; set; }
+
+        public IModule Module { get; set; }
 
         public virtual bool TryRun(CommandInput ci, IOutput output, out IList<CommandError> errors)
         {
@@ -41,10 +49,6 @@
 
             errors.Add(new CommandError("Unknown parameters", "Current parameters can't be parsed"));
             return false;
-        }
-
-        public virtual void Initialize()
-        {
         }
 
         public List<CommandSignature> Signatures { get; set; }

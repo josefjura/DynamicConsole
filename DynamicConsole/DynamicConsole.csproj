@@ -55,7 +55,7 @@
     <Compile Include="Commands\Attributes\CommandParameterAttribute.cs" />
     <Compile Include="Commands\Attributes\CommandTokenAttribute.cs" />
     <Compile Include="Commands\Base\BaseCommand.cs" />
-    <Compile Include="Commands\Base\IEnvironmentCommand.cs" />
+    <Compile Include="Commands\Base\IConsoleCommand.cs" />
     <Compile Include="Commands\Errors\CommandError.cs" />
     <Compile Include="Commands\Input\CommandInput.cs" />
     <Compile Include="Commands\Input\Parameter.cs" />
@@ -63,6 +63,7 @@
     <Compile Include="Commands\Modules\Base\IModuleRegistrar.cs" />
     <Compile Include="Commands\Modules\Base\ModuleBase.cs" />
     <Compile Include="Commands\Modules\UnityRegistrar.cs" />
+    <Compile Include="Commands\RegisterToken.cs" />
     <Compile Include="Commands\Signatures\CommandSignature.cs" />
     <Compile Include="Commands\Signatures\CommandSignaturePart.cs" />
     <Compile Include="Commands\Signatures\SimpleSignature.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="DynamicConsole.cs" />
     <Compile Include="Commands\Exceptions\CommandUniquenessException.cs" />
     <Compile Include="IO\Base\IOutput.cs" />
+    <Compile Include="IO\Formatting\TabularOutput.cs" />
     <Compile Include="IO\ConsoleOutput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
