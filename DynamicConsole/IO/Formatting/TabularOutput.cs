@@ -46,5 +46,15 @@ namespace DynamicConsole.IO.Formatting
         {
             return this.maxWidths[cellIndex];
         }
+
+        public int GetColumnStart(int cellIndex)
+        {
+            return this.maxWidths.Take(cellIndex).Sum();
+        }
+
+        public int GetTableWidth()
+        {
+            return this.maxWidths.Sum();
+        }
     }
 }

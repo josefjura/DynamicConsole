@@ -1,6 +1,7 @@
 namespace DynamicConsole.IO
 {
     using System;
+    using System.Linq;
 
     using global::DynamicConsole.Commands.Base;
     using global::DynamicConsole.IO.Base;
@@ -21,32 +22,51 @@ namespace DynamicConsole.IO
         public void WriteHelp(IConsoleCommand comm)
         {
             Console.WriteLine($"Help for command: '{comm.Keyword?.ToUpper() ?? "Unknown"}'");
+            TabularOutput to = new TabularOutput(77);
             foreach (var sig in comm.Signatures)
             {
-                Console.Write("\t> ");
-                Console.Write(comm.Keyword);
-                Console.WriteLine(sig.GetHelp());
-                Console.Write("\t  ");
-                Console.WriteLine(sig.Description);
+                to.AddRow(comm.Keyword, sig.GetHelp(), ":", sig.Description);
             }
+
+            WriteTable(to);
         }
 
         public void WriteTable(TabularOutput table)
         {
+            var width = table.GetTableWidth();
+
             foreach (var row in table.Data)
             {
                 for (int cellIndex = 0; cellIndex < row.Count; cellIndex++)
                 {
-                    WriteCell(row[cellIndex], table.GetColumnWidth(cellIndex));
+                    var colWidth = table.GetColumnWidth(cellIndex);
+                    var colStart = table.GetColumnStart(cellIndex);
+                    var realColWidth = colStart + colWidth > Console.BufferWidth ? Console.BufferWidth - colStart : colWidth;
+                    WriteCell(row[cellIndex], colStart, realColWidth);
                 }
                 WriteLine("");
             }
         }
 
-        private void WriteCell(string text, int cellWidth)
+        private void WriteCell(string text, int startWidth, int cellWidth)
         {
-            var cell = $"{text.PadRight(cellWidth)}";
-            Write($"{cell} ");
+
+
+            int written = 0;
+            while (written < text.Length)
+            {
+                var word = text.Skip(written).Take(cellWidth).ToList();
+                written += word.Count();
+                var realText = new string(word.ToArray());
+                var cell = $"{realText.PadRight(cellWidth)}";
+                WriteFromPosition(startWidth, $"{cell} ");
+            }
+        }
+
+        private void WriteFromPosition(int position, string text)
+        {
+            Console.CursorLeft = position;
+            Write(text);
         }
 
         public void Clear()
