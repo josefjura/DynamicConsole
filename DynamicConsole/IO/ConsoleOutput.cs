@@ -22,7 +22,7 @@ namespace DynamicConsole.IO
         public void WriteHelp(IConsoleCommand comm)
         {
             Console.WriteLine($"Help for command: '{comm.Keyword?.ToUpper() ?? "Unknown"}'");
-            TabularOutput to = new TabularOutput(77);
+            var to = new TabularOutput(77);
             foreach (var sig in comm.Signatures)
             {
                 to.AddRow(comm.Keyword, sig.GetHelp(), ":", sig.Description);
@@ -35,20 +35,27 @@ namespace DynamicConsole.IO
         {
             foreach (var row in table.Data)
             {
-                for (int cellIndex = 0; cellIndex < row.Count; cellIndex++)
+                for (var cellIndex = 0; cellIndex < row.Count; cellIndex++)
                 {
                     var colWidth = table.GetColumnWidth(cellIndex);
                     var colStart = table.GetColumnStart(cellIndex);
-                    var realColWidth = colStart + colWidth > Console.BufferWidth ? Console.BufferWidth - colStart : colWidth;
+                    var realColWidth = colStart + colWidth > Console.BufferWidth
+                                           ? Console.BufferWidth - colStart
+                                           : colWidth;
                     WriteCell(row[cellIndex], colStart, realColWidth);
                 }
                 WriteLine("");
             }
         }
 
+        public void Clear()
+        {
+            Console.Clear();
+        }
+
         private void WriteCell(string text, int startWidth, int cellWidth)
         {
-            int written = 0;
+            var written = 0;
             while (written < text.Length)
             {
                 var word = text.Skip(written).Take(cellWidth).ToList();
@@ -63,11 +70,6 @@ namespace DynamicConsole.IO
         {
             Console.CursorLeft = position;
             Write(text);
-        }
-
-        public void Clear()
-        {
-            Console.Clear();
         }
     }
 }

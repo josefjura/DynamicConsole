@@ -15,9 +15,9 @@ namespace DynamicConsole.Commands.Base
 
         string Keyword { get; set; }
 
-        List<CommandSignature> Signatures { get; set; }
-
         IModule Module { get; set; }
+
+        List<CommandSignature> Signatures { get; set; }
 
         #endregion
 

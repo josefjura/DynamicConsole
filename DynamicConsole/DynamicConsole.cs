@@ -10,7 +10,6 @@ namespace DynamicConsole
     using global::DynamicConsole.Commands.Base;
     using global::DynamicConsole.Commands.Exceptions;
     using global::DynamicConsole.Commands.Input;
-    using global::DynamicConsole.Commands.Modules;
     using global::DynamicConsole.Commands.Modules.Base;
     using global::DynamicConsole.IO.Base;
 
@@ -47,19 +46,6 @@ namespace DynamicConsole
             UnityInitialization(registrar);
         }
 
-        private void UnityInitialization(IModuleRegistrar registrar)
-        {
-            registrar.RegisterInstance(this, new PerThreadLifetimeManager());
-            var token = new RegisterToken(registrar);
-            this.RegisterCommands(token);
-            _commands = token.GetCurrentCommands().ToList();
-        }
-
-        public virtual void RegisterCommands(RegisterToken uc)
-        {
-
-        }
-
         #endregion
 
         #region Properties
@@ -92,6 +78,17 @@ namespace DynamicConsole
             }
         }
 
+        private void UnityInitialization(IModuleRegistrar registrar)
+        {
+            registrar.RegisterInstance(this, new PerThreadLifetimeManager());
+            var token = new RegisterToken(registrar);
+            this.RegisterCommands(token);
+            _commands = token.GetCurrentCommands().ToList();
+        }
+
+        public virtual void RegisterCommands(RegisterToken uc)
+        {
+        }
 
         public void ProcessInput(CommandInput input, bool findSimilar)
         {

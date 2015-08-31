@@ -1,7 +1,5 @@
 namespace DynamicConsole.IO.Base
 {
-    using System.Runtime.InteropServices;
-
     using global::DynamicConsole.Commands.Base;
     using global::DynamicConsole.IO.Formatting;
 

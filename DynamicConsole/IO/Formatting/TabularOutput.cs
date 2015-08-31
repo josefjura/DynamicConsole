@@ -5,8 +5,7 @@ namespace DynamicConsole.IO.Formatting
 
     public class TabularOutput
     {
-
-        public int Width { get; set; }
+        #region Constructors
 
         public TabularOutput(int width)
         {
@@ -15,15 +14,23 @@ namespace DynamicConsole.IO.Formatting
             this.maxWidths = new List<int>();
         }
 
-        private List<int> maxWidths { get; set; }
+        #endregion
+
+        #region Properties
 
         public List<List<string>> Data { get; set; }
 
+        private List<int> maxWidths { get; }
+
+        public int Width { get; set; }
+
+        #endregion
+
         public void AddRow(params string[] values)
         {
-            int rowNumber = this.Data.Count;
+            var rowNumber = this.Data.Count;
 
-            for (int i = 0; i < values.Length; i++)
+            for (var i = 0; i < values.Length; i++)
             {
                 var fresh = values[i].Length;
 
@@ -35,8 +42,6 @@ namespace DynamicConsole.IO.Formatting
                 {
                     this.maxWidths.Add(values[i].Length);
                 }
-
-
             }
 
             this.Data.Add(values.ToList());
