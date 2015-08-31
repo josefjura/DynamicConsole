@@ -34,7 +34,7 @@ namespace DynamicConsole
         public DynamicConsole(
             string prompt,
             IOutput output,
-            ConsoleActionCallback<IEnvironmentCommand> foundCommand,
+            ConsoleActionCallback<IConsoleCommand> foundCommand,
             ConsoleActionCallback unknownCommand)
         {
             this.Output = output;
@@ -53,7 +53,7 @@ namespace DynamicConsole
 
         #region Properties
 
-        public ReadOnlyCollection<IEnvironmentCommand> Commands
+        public ReadOnlyCollection<IConsoleCommand> Commands
         {
             get
             {
@@ -61,7 +61,7 @@ namespace DynamicConsole
             }
         }
 
-        public ConsoleActionCallback<IEnvironmentCommand> FoundCommand { get; set; }
+        public ConsoleActionCallback<IConsoleCommand> FoundCommand { get; set; }
 
         public bool IsExiting { get; set; }
 

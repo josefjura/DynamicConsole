@@ -18,7 +18,7 @@ namespace DynamicConsole.IO
             Console.WriteLine(text);
         }
 
-        public void WriteHelp(IEnvironmentCommand comm)
+        public void WriteHelp(IConsoleCommand comm)
         {
             Console.WriteLine($"Help for command: '{comm.Keyword?.ToUpper() ?? "Unknown"}'");
             foreach (var sig in comm.Signatures)

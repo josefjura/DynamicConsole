@@ -11,7 +11,7 @@ namespace DynamicConsole.IO.Base
 
         void WriteLine(string text);
 
-        void WriteHelp(IEnvironmentCommand comm);
+        void WriteHelp(IConsoleCommand comm);
 
         void WriteTable(TabularOutput table);
 

@@ -7,7 +7,7 @@
     using global::DynamicConsole.Commands.Signatures;
     using global::DynamicConsole.IO.Base;
 
-    public abstract class BaseCommand : IEnvironmentCommand
+    public abstract class BaseCommand : IConsoleCommand
     {
         #region Fields
 

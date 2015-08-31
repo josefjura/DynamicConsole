@@ -43,7 +43,7 @@ namespace DynamicConsole.Commands.Modules
             }
         }
 
-        public T ResolveCommand<T>() where T : class, IEnvironmentCommand
+        public T ResolveCommand<T>() where T : class, IConsoleCommand
         {
             return this._container.Resolve<T>();
         }

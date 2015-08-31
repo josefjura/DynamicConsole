@@ -8,7 +8,7 @@ namespace DynamicConsole.Commands.Base
     using global::DynamicConsole.Commands.Signatures;
     using global::DynamicConsole.IO.Base;
 
-    public interface IEnvironmentCommand : IDisposable
+    public interface IConsoleCommand : IDisposable
     {
         #region Properties
 

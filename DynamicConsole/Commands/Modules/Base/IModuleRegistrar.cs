@@ -10,6 +10,6 @@ namespace DynamicConsole.Commands.Modules.Base
 
         void RegisterService<TIntf, TImpl>(Func<TImpl> constructor) where TImpl : TIntf;
 
-        T ResolveCommand<T>() where T : class, IEnvironmentCommand;
+        T ResolveCommand<T>() where T : class, IConsoleCommand;
     }
 }

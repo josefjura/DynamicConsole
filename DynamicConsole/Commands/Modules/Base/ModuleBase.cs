@@ -10,7 +10,7 @@
     {
         #region Fields
 
-        private readonly List<IEnvironmentCommand> _commands;
+        private readonly List<IConsoleCommand> _commands;
 
         private readonly IModuleRegistrar _registrar;
 
@@ -21,12 +21,12 @@
         public ModuleBase(IModuleRegistrar registrar)
         {
             this._registrar = registrar;
-            _commands = new List<IEnvironmentCommand>();
+            _commands = new List<IConsoleCommand>();
         }
 
         #endregion
 
-        public ReadOnlyCollection<IEnvironmentCommand> Commands
+        public ReadOnlyCollection<IConsoleCommand> Commands
         {
             get
             {
@@ -34,13 +34,13 @@
             }
         }
 
-        public void AddCommand<T>() where T : class, IEnvironmentCommand
+        public void AddCommand<T>() where T : class, IConsoleCommand
         {
             var c = _registrar.ResolveCommand<T>();
             this._commands.Add(c);
         }
 
-        public void AddCommand<T>(Action<IModuleRegistrar> serviceInitialization) where T : class, IEnvironmentCommand
+        public void AddCommand<T>(Action<IModuleRegistrar> serviceInitialization) where T : class, IConsoleCommand
         {
             serviceInitialization(_registrar);
             this.AddCommand<T>();
