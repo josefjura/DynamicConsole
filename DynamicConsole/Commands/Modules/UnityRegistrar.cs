@@ -48,6 +48,11 @@ namespace DynamicConsole.Commands.Modules
             return this._container.Resolve<T>();
         }
 
+        public void RegisterInstance<T>(T dynamicConsole, LifetimeManager perThreadLifetimeManager)
+        {
+            this._container.RegisterInstance(dynamicConsole, perThreadLifetimeManager);
+        }
+
         public void RegisterService<TIntf, TImpl>(TImpl value) where TImpl : TIntf
         {
             if (!this.IsRegistered<TIntf>())

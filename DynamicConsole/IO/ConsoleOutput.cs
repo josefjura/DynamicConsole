@@ -33,8 +33,6 @@ namespace DynamicConsole.IO
 
         public void WriteTable(TabularOutput table)
         {
-            var width = table.GetTableWidth();
-
             foreach (var row in table.Data)
             {
                 for (int cellIndex = 0; cellIndex < row.Count; cellIndex++)
@@ -50,8 +48,6 @@ namespace DynamicConsole.IO
 
         private void WriteCell(string text, int startWidth, int cellWidth)
         {
-
-
             int written = 0;
             while (written < text.Length)
             {

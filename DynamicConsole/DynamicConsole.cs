@@ -6,6 +6,7 @@ namespace DynamicConsole
     using System.Diagnostics;
     using System.Linq;
 
+    using global::DynamicConsole.Commands;
     using global::DynamicConsole.Commands.Base;
     using global::DynamicConsole.Commands.Exceptions;
     using global::DynamicConsole.Commands.Input;
@@ -23,9 +24,7 @@ namespace DynamicConsole
 
         #region Fields
 
-        private readonly List<IModule> _modules;
-
-        protected IModuleRegistrar _registrar;
+        private List<IConsoleCommand> _commands;
 
         #endregion
 
@@ -34,6 +33,7 @@ namespace DynamicConsole
         public DynamicConsole(
             string prompt,
             IOutput output,
+            IModuleRegistrar registrar,
             ConsoleActionCallback<IConsoleCommand> foundCommand,
             ConsoleActionCallback unknownCommand)
         {
@@ -42,11 +42,22 @@ namespace DynamicConsole
             this.FoundCommand = foundCommand;
             this.UnknownCommand = unknownCommand;
 
-            var uc = new UnityContainer();
-            uc.RegisterInstance(this, new PerThreadLifetimeManager());
+            _commands = new List<IConsoleCommand>();
 
-            _registrar = new UnityRegistrar(uc);
-            _modules = new List<IModule>();
+            UnityInitialization(registrar);
+        }
+
+        private void UnityInitialization(IModuleRegistrar registrar)
+        {
+            registrar.RegisterInstance(this, new PerThreadLifetimeManager());
+            var token = new RegisterToken(registrar);
+            this.RegisterCommands(token);
+            _commands = token.GetCurrentCommands().ToList();
+        }
+
+        public virtual void RegisterCommands(RegisterToken uc)
+        {
+
         }
 
         #endregion
@@ -57,21 +68,13 @@ namespace DynamicConsole
         {
             get
             {
-                return _modules.SelectMany(x => x.Commands).ToList().AsReadOnly();
+                return _commands.AsReadOnly();
             }
         }
 
         public ConsoleActionCallback<IConsoleCommand> FoundCommand { get; set; }
 
         public bool IsExiting { get; set; }
-
-        public ReadOnlyCollection<IModule> Modules
-        {
-            get
-            {
-                return _modules.AsReadOnly();
-            }
-        }
 
         public IOutput Output { get; }
 
@@ -89,11 +92,6 @@ namespace DynamicConsole
             }
         }
 
-        public void AddModule(IModule module)
-        {
-            this._modules.Add(module);
-        }
-        
 
         public void ProcessInput(CommandInput input, bool findSimilar)
         {

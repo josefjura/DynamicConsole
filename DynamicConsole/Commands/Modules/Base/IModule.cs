@@ -12,9 +12,5 @@
         ReadOnlyCollection<IConsoleCommand> Commands { get; }
 
         #endregion
-
-        void AddCommand<T>() where T : class, IConsoleCommand;
-
-        void AddCommand<T>(Action<IModuleRegistrar> serviceInitialization) where T : class, IConsoleCommand;
     }
 }

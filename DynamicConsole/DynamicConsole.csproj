@@ -63,6 +63,7 @@
     <Compile Include="Commands\Modules\Base\IModuleRegistrar.cs" />
     <Compile Include="Commands\Modules\Base\ModuleBase.cs" />
     <Compile Include="Commands\Modules\UnityRegistrar.cs" />
+    <Compile Include="Commands\RegisterToken.cs" />
     <Compile Include="Commands\Signatures\CommandSignature.cs" />
     <Compile Include="Commands\Signatures\CommandSignaturePart.cs" />
     <Compile Include="Commands\Signatures\SimpleSignature.cs" />

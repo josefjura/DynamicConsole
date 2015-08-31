@@ -4,6 +4,7 @@
 
     using global::DynamicConsole.Commands.Errors;
     using global::DynamicConsole.Commands.Input;
+    using global::DynamicConsole.Commands.Modules.Base;
     using global::DynamicConsole.Commands.Signatures;
     using global::DynamicConsole.IO.Base;
 
@@ -31,6 +32,8 @@
         }
 
         public string Keyword { get; set; }
+
+        public IModule Module { get; set; }
 
         public virtual bool TryRun(CommandInput ci, IOutput output, out IList<CommandError> errors)
         {

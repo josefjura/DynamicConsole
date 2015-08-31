@@ -5,6 +5,7 @@ namespace DynamicConsole.Commands.Base
 
     using global::DynamicConsole.Commands.Errors;
     using global::DynamicConsole.Commands.Input;
+    using global::DynamicConsole.Commands.Modules.Base;
     using global::DynamicConsole.Commands.Signatures;
     using global::DynamicConsole.IO.Base;
 
@@ -15,6 +16,8 @@ namespace DynamicConsole.Commands.Base
         string Keyword { get; set; }
 
         List<CommandSignature> Signatures { get; set; }
+
+        IModule Module { get; set; }
 
         #endregion
 
