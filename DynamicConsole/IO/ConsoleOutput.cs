@@ -4,6 +4,7 @@ namespace DynamicConsole.IO
 
     using global::DynamicConsole.Commands.Base;
     using global::DynamicConsole.IO.Base;
+    using global::DynamicConsole.IO.Formatting;
 
     public class ConsoleOutput : IOutput
     {

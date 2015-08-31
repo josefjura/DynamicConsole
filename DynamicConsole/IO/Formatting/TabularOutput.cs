@@ -1,4 +1,4 @@
-namespace DynamicConsole.IO
+namespace DynamicConsole.IO.Formatting
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -10,9 +10,9 @@ namespace DynamicConsole.IO
 
         public TabularOutput(int width)
         {
-            Width = width;
-            Data = new List<List<string>>();
-            maxWidths = new List<int>();
+            this.Width = width;
+            this.Data = new List<List<string>>();
+            this.maxWidths = new List<int>();
         }
 
         private List<int> maxWidths { get; set; }
@@ -21,30 +21,30 @@ namespace DynamicConsole.IO
 
         public void AddRow(params string[] values)
         {
-            int rowNumber = Data.Count;
+            int rowNumber = this.Data.Count;
 
             for (int i = 0; i < values.Length; i++)
             {
                 var fresh = values[i].Length;
 
-                if (i < maxWidths.Count)
+                if (i < this.maxWidths.Count)
                 {
-                    maxWidths[i] = maxWidths[i] < fresh ? fresh : maxWidths[i];
+                    this.maxWidths[i] = this.maxWidths[i] < fresh ? fresh : this.maxWidths[i];
                 }
                 else
                 {
-                    maxWidths.Add(values[i].Length);
+                    this.maxWidths.Add(values[i].Length);
                 }
 
 
             }
 
-            Data.Add(values.ToList());
+            this.Data.Add(values.ToList());
         }
 
         public int GetColumnWidth(int cellIndex)
         {
-            return maxWidths[cellIndex];
+            return this.maxWidths[cellIndex];
         }
     }
 }
