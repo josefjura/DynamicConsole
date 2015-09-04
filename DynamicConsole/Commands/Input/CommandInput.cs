@@ -2,7 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
+    using System.Text.RegularExpressions;
 
     using global::DynamicConsole.Commands.Errors;
 
@@ -47,62 +49,27 @@
         public static CommandInput Parse(string input)
         {
             var ci = new CommandInput();
-            var tokens = input.Trim().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            string pattern = "-(?<name>(?:(?![-\" :]).)+):\"(?<value>(?:(?![-\":]).)+)\"|-(?<name>(?:(?![-\" :]).)+):(?<value>(?:(?![-\":]).)+)|-(?<name>(?:(?![-\" :]).)+)|(?<value>(?:(?![-\" :]).)+)";
 
-            if (tokens.Any())
+            var regex = new Regex(pattern);
+            var result = regex.Matches(input);
+            int i = 0;
+            foreach (Match match in result)
             {
-                ci.Keyword = tokens.First();
-                ParseParameters(ci, tokens.Skip(1));
+                if (i == 0)
+                    ci.Keyword = match.Value;
+                else
+                {
+                    var nameGroup = match.Groups["name"];
+                    var name = nameGroup.Success ? nameGroup.Value.Trim() : null;
+                    var valueGroup = match.Groups["value"];
+                    var value = valueGroup.Success ? valueGroup.Value.Trim() : null;
+                    ci.Parameters.Add(new Parameter { Index = name == null ? i - 1 : -1, Name = name, Value = value });
+                }
+                i++;
             }
 
             return ci;
-        }
-
-        private static void ParseParameters(CommandInput ci, IEnumerable<string> parameters, int index = 0)
-        {
-            var paramsList = parameters as IList<string> ?? parameters.ToList();
-            if (!paramsList.Any())
-            {
-                return;
-            }
-
-            var curr = paramsList.First();
-            var processed = 0;
-            if (curr.StartsWith("-"))
-            {
-                if (paramsList.Count > 1 && !paramsList[1].StartsWith("-"))
-                {
-                    ProcessNamedParameter(ci, index, curr, paramsList[1]);
-                    processed = 2;
-                }
-                else
-                {
-                    ProcessSwitchParameter(ci, index, paramsList.First());
-                    processed = 1;
-                }
-            }
-            else
-            {
-                ProcessIndexedParameter(ci, index, paramsList.First());
-                processed = 1;
-            }
-
-            ParseParameters(ci, paramsList.Skip(processed), index + processed);
-        }
-
-        private static void ProcessNamedParameter(CommandInput ci, int index, string name, string value)
-        {
-            ci.Parameters.Add(new Parameter { Index = index, Name = name.Replace("-", ""), Value = value });
-        }
-
-        private static void ProcessIndexedParameter(CommandInput ci, int index, string value)
-        {
-            ci.Parameters.Add(new Parameter { Index = index, Value = value });
-        }
-
-        private static void ProcessSwitchParameter(CommandInput ci, int index, string name)
-        {
-            ci.Parameters.Add(new Parameter { Index = index, Name = name.Replace("-", "") });
         }
 
         public override string ToString()

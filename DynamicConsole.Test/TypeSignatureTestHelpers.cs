@@ -2,19 +2,23 @@ using System.Collections.Generic;
 
 using DynamicConsole.Commands.Errors;
 using DynamicConsole.Commands.Input;
-using DynamicConsole.Commands.Signatures;
 
-static internal class TypeSignatureTestHelpers
+namespace DynamicConsole.Tests
 {
-    public static bool TestLine<T>(TypedSignature<T> sig, string line) where T : class, new()
+    using global::DynamicConsole.Commands.Signatures;
+
+    static internal class TypeSignatureTestHelpers
     {
-        var ci = CommandInput.Parse(line);
-        var can = sig.CanRun(ci);
-        var run = false;
-        if (can)
+        public static bool TestLine<T>(TypedSignature<T> sig, string line) where T : class, new()
         {
-            run = sig.Run(ci, new List<CommandError>());
+            var ci = CommandInput.Parse(line);
+            var can = sig.CanRun(ci);
+            var run = false;
+            if (can)
+            {
+                run = sig.Run(ci, new List<CommandError>());
+            }
+            return can && run;
         }
-        return can && run;
     }
 }

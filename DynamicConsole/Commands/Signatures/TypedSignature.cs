@@ -1,6 +1,5 @@
 namespace DynamicConsole.Commands.Signatures
 {
-    using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
@@ -9,6 +8,7 @@ namespace DynamicConsole.Commands.Signatures
 
     using global::DynamicConsole.Commands.Attributes;
     using global::DynamicConsole.Commands.Errors;
+    using global::DynamicConsole.Commands.Exceptions;
     using global::DynamicConsole.Commands.Input;
 
     using Microsoft.Practices.ObjectBuilder2;
@@ -113,7 +113,7 @@ namespace DynamicConsole.Commands.Signatures
 
             foreach (var par in ci.Parameters)
             {
-                var results = this.TypeMap.Where(x => par.Conforms(x.Value)).ToList();
+                var results = this.TypeMap.Where(x => par.Conforms(x.Value)).ToList();                
 
                 if (!results.Any())
                 {
@@ -174,34 +174,6 @@ namespace DynamicConsole.Commands.Signatures
             }
 
             return toReturn;
-        }
-    }
-
-    public class MissingParametersException : Exception
-    {
-        private readonly List<CommandParameterAttribute> _unprocessedMandatory;
-
-        public MissingParametersException(List<CommandParameterAttribute> unprocessedMandatory) : base()
-        {
-            this._unprocessedMandatory = unprocessedMandatory;
-        }
-    }
-
-    public class AmbiguousParameterException : Exception
-    {
-        public AmbiguousParameterException(List<KeyValuePair<PropertyInfo, CommandParameterAttribute>> result) : base()
-        {
-
-        }
-    }
-
-    public class UnidentifiedParameterException : Exception
-    {
-        private readonly Parameter _par;
-
-        public UnidentifiedParameterException(Parameter par) : base("Parameter couldn\'t be identified")
-        {
-            this._par = par;
         }
     }
 }

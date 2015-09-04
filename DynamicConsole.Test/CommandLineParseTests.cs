@@ -1,6 +1,6 @@
-﻿namespace DynamicConsoleTests
+﻿namespace DynamicConsole.Tests
 {
-    using DynamicConsole.Commands.Input;
+    using global::DynamicConsole.Commands.Input;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -82,7 +82,7 @@
             var keyword = "keyword";
             var parameterName = "name";
             var parameterValue = "value";
-            var line = $"{keyword} -{parameterName} {parameterValue}";
+            var line = $"{keyword} -{parameterName}:{parameterValue}";
 
             var result = CommandInput.Parse(line);
 
@@ -106,7 +106,7 @@
             var parameter3Name = "name";
             var parameter3Value = "value";
             var line =
-                $"{keyword} -{parameter1Name} {parameter1Value} -{parameter2Name} {parameter2Value} -{parameter3Name} {parameter3Value} ";
+                $"{keyword} -{parameter1Name}:{parameter1Value} -{parameter2Name}:{parameter2Value} -{parameter3Name}:{parameter3Value} ";
 
             var result = CommandInput.Parse(line);
 
@@ -170,12 +170,12 @@
         [TestMethod]
         public void Positive_ReadMixedParametersVar1()
         {
-            var keyword = "keyword";
-            var parameter1Value = "value";
-            var parameter2Name = "name";
-            var parameter2Value = "value";
-            var parameter3Name = "name";
-            var line = $"{keyword} {parameter1Value} -{parameter2Name} {parameter2Value} -{parameter3Name}";
+            var keyword = "keywordValue";
+            var parameter1Value = "value1";
+            var parameter2Name = "name2";
+            var parameter2Value = "value2";
+            var parameter3Name = "name3";
+            var line = $"{keyword} {parameter1Value} -{parameter2Name}:{parameter2Value} -{parameter3Name}";
 
             var result = CommandInput.Parse(line);
 
@@ -204,7 +204,7 @@
             var parameter2Name = "name";
             var parameter2Value = "value";
             var parameter3Name = "name";
-            var line = $"{keyword} {parameter1Value} -{parameter3Name} -{parameter2Name} {parameter2Value}";
+            var line = $"{keyword} {parameter1Value} -{parameter3Name} -{parameter2Name}:{parameter2Value}";
 
             var result = CommandInput.Parse(line);
 

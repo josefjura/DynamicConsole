@@ -1,9 +1,9 @@
-﻿namespace DynamicConsoleTests
+﻿namespace DynamicConsole.Tests
 {
     using System;
 
-    using DynamicConsole.Commands.Input;
-    using DynamicConsole.Commands.Signatures;
+    using global::DynamicConsole.Commands.Input;
+    using global::DynamicConsole.Commands.Signatures;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 

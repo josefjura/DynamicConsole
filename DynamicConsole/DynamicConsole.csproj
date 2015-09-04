@@ -53,6 +53,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\Attributes\CommandParameterAttribute.cs" />
+    <Compile Include="Commands\Attributes\CommandSwitchAttribute.cs" />
+    <Compile Include="Commands\Exceptions\CommandSwitchNotBoolException.cs" />
     <Compile Include="Commands\Attributes\CommandTokenAttribute.cs" />
     <Compile Include="Commands\Base\BaseCommand.cs" />
     <Compile Include="Commands\Base\IConsoleCommand.cs" />
@@ -64,12 +66,16 @@
     <Compile Include="Commands\Modules\Base\ModuleBase.cs" />
     <Compile Include="Commands\Modules\UnityRegistrar.cs" />
     <Compile Include="Commands\RegisterToken.cs" />
+    <Compile Include="Commands\Exceptions\AmbiguousParameterException.cs" />
     <Compile Include="Commands\Signatures\CommandSignature.cs" />
     <Compile Include="Commands\Signatures\CommandSignaturePart.cs" />
+    <Compile Include="Commands\Exceptions\MissingParametersException.cs" />
     <Compile Include="Commands\Signatures\SimpleSignature.cs" />
     <Compile Include="Commands\Signatures\TokenSignaturePart.cs" />
     <Compile Include="Commands\Signatures\TypedSignature.cs" />
     <Compile Include="Commands\Signatures\TypeSignaturePart.cs" />
+    <Compile Include="Commands\Exceptions\UnidentifiedParameterException.cs" />
+    <Compile Include="Commands\SimpleModule.cs" />
     <Compile Include="DynamicConsole.cs" />
     <Compile Include="Commands\Exceptions\CommandUniquenessException.cs" />
     <Compile Include="IO\Base\IOutput.cs" />

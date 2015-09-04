@@ -13,16 +13,4 @@ namespace DynamicConsole.Tests
         [CommandParameter("param1", Index = 0)]
         public string Param1 { get; set; }
     }
-
-    public class SingleNameParameterSignature
-    {
-        [CommandParameter("param1")]
-        public string Param1 { get; set; }
-    }
-
-    public class SingleTokenParameterSignature
-    {
-        [CommandToken(0, "param1")]
-        public string Param1 { get; set; }
-    }
 }
