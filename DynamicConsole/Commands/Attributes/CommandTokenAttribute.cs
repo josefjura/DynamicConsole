@@ -8,10 +8,11 @@
         #region Constructors
 
         public CommandTokenAttribute(int index, string value)
-            : base("token", TypeCode.String)
+            : base("token")
         {
             this.Value = value;
             this.Index = index;
+            this.IsMandatory = true;
         }
 
         #endregion

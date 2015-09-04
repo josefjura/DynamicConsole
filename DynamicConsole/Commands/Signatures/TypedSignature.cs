@@ -1,6 +1,6 @@
 namespace DynamicConsole.Commands.Signatures
 {
-    using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
@@ -8,7 +8,10 @@ namespace DynamicConsole.Commands.Signatures
 
     using global::DynamicConsole.Commands.Attributes;
     using global::DynamicConsole.Commands.Errors;
+    using global::DynamicConsole.Commands.Exceptions;
     using global::DynamicConsole.Commands.Input;
+
+    using Microsoft.Practices.ObjectBuilder2;
 
     using RandomR.Main;
 
@@ -45,19 +48,39 @@ namespace DynamicConsole.Commands.Signatures
             return this._callback?.Invoke(this.ParseType(ci), errors) ?? false;
         }
 
+
         private TData ParseType(CommandInput ci)
         {
             var instance = new TData();
 
-            foreach (var p in this.TypeMap)
+            IList<KeyValuePair<PropertyInfo, CommandParameterAttribute>> processed = new List<KeyValuePair<PropertyInfo, CommandParameterAttribute>>();
+
+            foreach (var par in ci.Parameters)
             {
-                var param = ci.Parameters.SingleOrDefault(x => x.Name == p.Value.Id || x.Index == p.Value.Index);
-                if (param == null)
+                var results = this.TypeMap.Where(x => par.Conforms(x.Value)).ToList();
+
+                if (!results.Any())
                 {
-                    throw new ApplicationException("Parameters are out of sync with data class");
+                    throw new UnidentifiedParameterException(par);
                 }
 
-                p.Key.SetValue(instance, Convert.ChangeType(param.Value, p.Value.Type));
+                if (results.Count > 1)
+                {
+                    throw new AmbiguousParameterException(results);
+                }
+
+                var result = results.Single();
+
+                result.Value.Process(instance, result.Key, par);
+
+                processed.Add(result);
+            }
+
+            var unprocessedMandatory = TypeMap.Except(processed).Where(x => x.Value.IsMandatory).Select(x => x.Value).ToList();
+
+            if (unprocessedMandatory.Any())
+            {
+                throw new MissingParametersException(unprocessedMandatory);
             }
 
             return instance;
@@ -86,15 +109,29 @@ namespace DynamicConsole.Commands.Signatures
                 return false;
             }
 
-            foreach (var p in this.TypeMap)
-            {
-                var result = ci.Parameters.Any(x => x.Conforms(p.Value));
+            IList<KeyValuePair<PropertyInfo, CommandParameterAttribute>> processed = new List<KeyValuePair<PropertyInfo, CommandParameterAttribute>>();
 
-                if (!result)
+            foreach (var par in ci.Parameters)
+            {
+                var results = this.TypeMap.Where(x => par.Conforms(x.Value)).ToList();                
+
+                if (!results.Any())
                 {
                     return false;
                 }
+
+                if (results.Count > 1)
+                {
+                    throw new AmbiguousParameterException(results);
+                }
+
+                var result = results.Single();
+
+
+                processed.Add(result);
             }
+
+            if (TypeMap.Except(processed).Any(x => x.Value.IsMandatory)) return false;
 
             return true;
         }

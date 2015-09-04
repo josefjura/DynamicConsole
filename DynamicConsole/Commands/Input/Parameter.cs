@@ -18,6 +18,14 @@
             }
         }
 
+        public bool IsIndexed
+        {
+            get
+            {
+                return Index != -1;
+            }
+        }
+
         public string Name { get; set; }
 
         public string Value { get; set; }
@@ -26,21 +34,24 @@
 
         public bool Conforms(CommandParameterAttribute attr)
         {
-            var index = attr.Index == this.Index;
-            var name = attr.Id == this.Name;
+            var name = this.IsNamed && attr.Id == this.Name;
+            var index = this.IsIndexed && attr.Index == this.Index;
             var value = string.IsNullOrEmpty(attr.Value) || attr.Value == this.Value;
 
             var type = false;
             try
             {
-                var typeValue = Convert.ChangeType(this.Value, attr.Type);
+                if (this.Value != null)
+                {
+                    var test = Convert.ChangeType(this.Value, attr.Type);
+                }
                 type = true;
             }
             catch (Exception)
             {
             }
 
-            return (index || name) && value && type;
+            return (!IsNamed || name) && (!IsIndexed || index) && value && type;
         }
     }
 }
