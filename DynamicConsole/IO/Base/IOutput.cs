@@ -14,5 +14,7 @@ namespace DynamicConsole.IO.Base
         void WriteTable(TabularOutput table);
 
         void Clear();
+
+        int Width { get; }
     }
 }

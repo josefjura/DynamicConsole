@@ -65,6 +65,14 @@ namespace DynamicConsole.IO
                 WriteFromPosition(startWidth, $"{cell} ");
             }
         }
+        
+        public int Width
+        {
+            get
+            {
+                return Console.BufferWidth;
+            }
+        }
 
         private void WriteFromPosition(int position, string text)
         {
