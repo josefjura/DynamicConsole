@@ -126,13 +126,31 @@
         }
 
         [TestMethod]
-        public void Positive_ReadMixedParameters()
+        public void Positive_ReadSingleSwitchParameters()
         {
             var keyword = "keyword";
-            var parameter1Value = "value";
-            var parameter2Name = "name";
-            var parameter2Value = "value";
-            var line = $"{keyword} {parameter1Value} -{parameter2Name} {parameter2Value}";
+            var parameter1Name = "name";
+            var line = $"{keyword} -{parameter1Name}";
+
+            var result = CommandInput.Parse(line);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(keyword, result.Keyword);
+            Assert.IsNotNull(result.Parameters);
+            Assert.AreEqual(1, result.Parameters.Count);
+
+            Assert.IsTrue(result.Parameters[0].IsNamed);
+            Assert.AreEqual(null, result.Parameters[0].Value);
+
+        }
+
+        [TestMethod]
+        public void Positive_ReadManySwitchParameters()
+        {
+            var keyword = "keyword";
+            var parameter1Name = "name1";
+            var parameter2Name = "name2";
+            var line = $"{keyword} -{parameter1Name} -{parameter2Name}";
 
             var result = CommandInput.Parse(line);
 
@@ -141,12 +159,71 @@
             Assert.IsNotNull(result.Parameters);
             Assert.AreEqual(2, result.Parameters.Count);
 
+            Assert.IsTrue(result.Parameters[0].IsNamed);
+            Assert.AreEqual(null, result.Parameters[0].Value);
+
+            Assert.IsTrue(result.Parameters[1].IsNamed);
+            Assert.AreEqual(null, result.Parameters[1].Value);
+        }
+
+
+        [TestMethod]
+        public void Positive_ReadMixedParametersVar1()
+        {
+            var keyword = "keyword";
+            var parameter1Value = "value";
+            var parameter2Name = "name";
+            var parameter2Value = "value";
+            var parameter3Name = "name";
+            var line = $"{keyword} {parameter1Value} -{parameter2Name} {parameter2Value} -{parameter3Name}";
+
+            var result = CommandInput.Parse(line);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(keyword, result.Keyword);
+            Assert.IsNotNull(result.Parameters);
+            Assert.AreEqual(3, result.Parameters.Count);
+
             Assert.IsFalse(result.Parameters[0].IsNamed);
             Assert.AreEqual(parameter1Value, result.Parameters[0].Value);
 
             Assert.IsTrue(result.Parameters[1].IsNamed);
             Assert.AreEqual(parameter2Name, result.Parameters[1].Name);
             Assert.AreEqual(parameter2Value, result.Parameters[1].Value);
+
+            Assert.IsTrue(result.Parameters[2].IsNamed);
+            Assert.AreEqual(parameter3Name, result.Parameters[2].Name);
+            Assert.AreEqual(null, result.Parameters[2].Value);
         }
+
+        [TestMethod]
+        public void Positive_ReadMixedParametersVar2()
+        {
+            var keyword = "keyword";
+            var parameter1Value = "value";
+            var parameter2Name = "name";
+            var parameter2Value = "value";
+            var parameter3Name = "name";
+            var line = $"{keyword} {parameter1Value} -{parameter3Name} -{parameter2Name} {parameter2Value}";
+
+            var result = CommandInput.Parse(line);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(keyword, result.Keyword);
+            Assert.IsNotNull(result.Parameters);
+            Assert.AreEqual(3, result.Parameters.Count);
+
+            Assert.IsFalse(result.Parameters[0].IsNamed);
+            Assert.AreEqual(parameter1Value, result.Parameters[0].Value);
+
+            Assert.IsTrue(result.Parameters[2].IsNamed);
+            Assert.AreEqual(parameter2Name, result.Parameters[2].Name);
+            Assert.AreEqual(parameter2Value, result.Parameters[2].Value);
+
+            Assert.IsTrue(result.Parameters[1].IsNamed);
+            Assert.AreEqual(parameter3Name, result.Parameters[1].Name);
+            Assert.AreEqual(null, result.Parameters[1].Value);
+        }
+
     }
 }

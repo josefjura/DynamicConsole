@@ -70,14 +70,14 @@
             var processed = 0;
             if (curr.StartsWith("-"))
             {
-                if (paramsList.Count > 1)
+                if (paramsList.Count > 1 && !paramsList[1].StartsWith("-"))
                 {
-                    ProcessNamedParameter(ci, index, paramsList.First(), paramsList[1]);
+                    ProcessNamedParameter(ci, index, curr, paramsList[1]);
                     processed = 2;
                 }
                 else
                 {
-                    ProcessNamedParameter(ci, index, paramsList.First());
+                    ProcessSwitchParameter(ci, index, paramsList.First());
                     processed = 1;
                 }
             }
@@ -100,10 +100,9 @@
             ci.Parameters.Add(new Parameter { Index = index, Value = value });
         }
 
-        private static void ProcessNamedParameter(CommandInput ci, int index, string name)
+        private static void ProcessSwitchParameter(CommandInput ci, int index, string name)
         {
-            ci.Errors.Add(
-                new CommandError("Parameter value missing", $"Missing value for parameter {name.Replace("-", "")}"));
+            ci.Parameters.Add(new Parameter { Index = index, Name = name.Replace("-", "") });
         }
 
         public override string ToString()

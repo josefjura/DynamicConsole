@@ -54,13 +54,20 @@
   <ItemGroup>
     <Compile Include="CommandLineParseTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestSignatures.cs" />
+    <Compile Include="TypeSignatureAssert.cs" />
     <Compile Include="TypeSignaturePartTests.cs" />
+    <Compile Include="TypeSignatureTestHelpers.cs" />
+    <Compile Include="TypeSignatureTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DynamicConsole\DynamicConsole.csproj">
       <Project>{526057a7-b838-48e7-889f-2fafb4a5dbc7}</Project>
       <Name>DynamicConsole</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="TypeSignatures\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
